@@ -4,7 +4,6 @@ var vacuum = require("../vacuum.js")
 
 test("vacuum throws on missing parameters", function (t) {
   t.throws(vacuum, "called with no parameters")
-  t.throws(function () { vacuum("directory") }, "called with no options")
   t.throws(function () { vacuum("directory", {}) }, "called with no callback")
 
   t.end()

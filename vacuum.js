@@ -11,8 +11,10 @@ module.exports = vacuum
 
 function vacuum(leafDir, options, cb) {
   assert(typeof leafDir === "string", "must pass in directory to remove")
-  assert(typeof options === "object", "must pass in options")
   assert(typeof cb === "function", "must pass in callback")
+
+  if (!options) options = {}
+  assert(typeof options === "object", "must pass in options")
 
   var base = options.base
   var log = options.log ? options.log : function () {}
