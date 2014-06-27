@@ -3,9 +3,10 @@ var dirname = require("path").dirname
 var resolve = require("path").resolve
 
 var rimraf  = require("rimraf")
+var lstat   = require("graceful-fs").lstat
 var readdir = require("graceful-fs").readdir
 var rmdir   = require("graceful-fs").rmdir
-var stat    = require("graceful-fs").stat
+var unlink  = require("graceful-fs").unlink
 
 module.exports = vacuum
 
@@ -19,15 +20,15 @@ function vacuum(leafDir, options, cb) {
   var base = options.base
   var log = options.log ? options.log : function () {}
 
-  stat(leafDir, function (error, stat) {
+  lstat(leafDir, function (error, stat) {
     if (error) {
       log(error.stack)
       return cb(error)
     }
 
-    if (!(stat && stat.isDirectory())) {
-      log(leafDir, "is not a directory")
-      return cb(new Error(leafDir + " is not a directory"))
+    if (!(stat && (stat.isDirectory() || stat.isSymbolicLink()))) {
+      log(leafDir, "is not a directory or link")
+      return cb(new Error(leafDir + " is not a directory or link"))
     }
 
     if (options.purge) {
@@ -62,13 +63,21 @@ function vacuum(leafDir, options, cb) {
       }
 
       log("removing", entry)
-      rmdir(entry, function (error) {
+      lstat(entry, function (error, stat) {
         if (error) {
-          log("unable to remove directory", entry, "due to", error.message)
+          log("unable to lstat directory", entry, "due to", error.message)
           return cb(error)
         }
 
-        next(dirname(entry))
+        var remove = stat.isSymbolicLink() ? unlink : rmdir
+        remove(entry, function (error) {
+          if (error) {
+            log("unable to remove directory", entry, "due to", error.message)
+            return cb(error)
+          }
+
+          next(dirname(entry))
+        })
       })
     })
   }
