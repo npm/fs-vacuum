@@ -24,13 +24,10 @@ vacuum("/path/to/my/tree/root/out/to/my/files", function (error) {
 ```
 # vacuum(directory, options, callback)
 
-* `directory` {String} Leaf directory to remove. **Must be a directory.**
+* `directory` {String} Leaf node to remove. **Must be a directory, symlink, or file.**
 * `options` {Object}
-  * `base` {String} No directories at or above this level of the filesystem
-    will be removed.
-  * `purge` {Boolean} If set, nuke the whole leaf directory, including its
-    contents.
-  * `log` {Function} A logging function that takes `npmlog`-compatible argument
-    lists.
+  * `base` {String} No directories at or above this level of the filesystem will be removed.
+  * `purge` {Boolean} If set, nuke the whole leaf directory, including its contents.
+  * `log` {Function} A logging function that takes `npmlog`-compatible argument lists.
 * `callback` {Function} Function to call once vacuuming is complete.
   * `error` {Error} What went wrong along the way, if anything.
