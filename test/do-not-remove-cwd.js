@@ -46,6 +46,7 @@ test("xXx setup xXx", function (t) {
 
 test("remove up to a point", function (t) {
   process.chdir(currentPath)
+  var origCwd = process.cwd()  
 
   vacuum(fullPath, {purge : false, base : testBase, log : log}, function (er) {
     t.ifError(er, "cleaned up to base")
@@ -55,7 +56,7 @@ test("remove up to a point", function (t) {
     t.doesNotThrow(function () {
         cwd = process.cwd()
     }, "process.cwd() can be called")
-    t.equal(cwd, currentPath)
+    t.equal(path.resolve(cwd), path.resolve(origCwd))
 
     t.equal(messages.length, 4, "got 3 removal & 1 finish message")
     t.equal(messages[3], "finished vacuuming up to " + partialPath)

@@ -19,6 +19,8 @@ function vacuum(leaf, options, cb) {
 
   var log = options.log ? options.log : function () {}
 
+  var cwd = resolve(process.cwd())
+
   var base = options.base
   if (base && resolve(leaf).indexOf(resolve(base)) !== 0) {
     return cb(new Error(resolve(leaf) + " is not a child of " + resolve(base)))
@@ -62,6 +64,12 @@ function vacuum(leaf, options, cb) {
     // either we've reached the base or we've reached the root
     if ((base && resolve(branch) === resolve(base)) || branch === dirname(branch)) {
       log("finished vacuuming up to", branch)
+      return cb(null)
+    }
+
+    console.error(cwd + " =?= " + resolve(branch));
+    if (cwd && (resolve(branch) === cwd)) {
+      log("finished vacuuming up to cwd ", branch)
       return cb(null)
     }
 
