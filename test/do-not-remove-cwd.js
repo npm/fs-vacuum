@@ -51,7 +51,11 @@ test("remove up to a point", function (t) {
     t.ifError(er, "cleaned up to base")
 
     // cwd must not throw
-    t.equal(process.cwd(), currentPath)
+    var cwd
+    t.doesNotThrow(function () {
+        cwd = process.cwd()
+    }, "process.cwd() can be called")
+    t.equal(cwd, currentPath)
 
     t.equal(messages.length, 4, "got 3 removal & 1 finish message")
     t.equal(messages[3], "finished vacuuming up to " + partialPath)
@@ -73,12 +77,15 @@ test("remove up to a point", function (t) {
     }
 
     t.doesNotThrow(function () {
-      stat = statSync(testBase)
-    }, testBase + " can be statted")
-    t.ok(stat && stat.isDirectory(), testBase + " is still a directory")
+      stat = statSync(currentPath)
+    }, currentPath + " can be statted")
+    t.ok(stat && stat.isDirectory(), currentPath + " is still a directory")
 
-    var files = readdirSync(testBase)
-    t.equal(files.length, 0, "nothing left in base directory")
+    var files
+    t.doesNotThrow(function () {
+      files = readdirSync(currentPath)
+    }, currentPath + " can be read")
+    t.equal(files && files.length, 0, "nothing left in cwd")
 
     t.end()
   })
