@@ -20,8 +20,8 @@ function vacuum(leaf, options, cb) {
 
   var log = options.log ? options.log : function () {}
 
-  leaf = resolve(leaf)
-  var base = resolve(options.base)
+  leaf = leaf && resolve(leaf)
+  var base = options.base && resolve(options.base)
   if (!(base && isInside(leaf, base))) {
     return cb(new Error(leaf + " is not a child of " + base))
   }
@@ -61,7 +61,7 @@ function vacuum(leaf, options, cb) {
   })
 
   function next(branch) {
-    branch = resolve(branch)
+    branch = branch && resolve(branch)
     // either we've reached the base or we've reached the root
     if ((base && branch === base) || branch === dirname(branch)) {
       log("finished vacuuming up to", branch)
