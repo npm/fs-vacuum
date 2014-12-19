@@ -22,7 +22,7 @@ function vacuum(leaf, options, cb) {
 
   leaf = leaf && resolve(leaf)
   var base = options.base && resolve(options.base)
-  if (!(base && isInside(leaf, base))) {
+  if (base && !isInside(leaf, base)) {
     return cb(new Error(leaf + " is not a child of " + base))
   }
 
