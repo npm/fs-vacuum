@@ -1,6 +1,6 @@
 {
   "name": "fs-vacuum",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "recursively remove empty directories -- to a point",
   "main": "vacuum.js",
   "scripts": {
