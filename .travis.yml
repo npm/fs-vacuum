@@ -8,5 +8,7 @@ node_js:
   - "0.8"
 sudo: false
 script: "npm test"
+before_install:
+  - "npm -g install npm"
 notifications:
     slack: npm-inc:kRqQjto7YbINqHPb1X6nS3g8
