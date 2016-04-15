@@ -4,7 +4,7 @@
   "description": "recursively remove empty directories -- to a point",
   "main": "vacuum.js",
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "standard && tap test/*.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/npm/fs-vacuum",
   "devDependencies": {
     "mkdirp": "^0.5.0",
+    "standard": "^6.0.8",
     "tap": "^0.4.11",
     "tmp": "0.0.24"
   },
