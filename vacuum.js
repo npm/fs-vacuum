@@ -95,7 +95,7 @@ function vacuum (leaf, options, cb) {
               log('quitting because lost the race to remove', branch)
               return cb(null)
             }
-            if (error.code === 'ENOTEMPTY') {
+            if (error.code === 'ENOTEMPTY' || error.code === 'EEXIST') {
               log('quitting because new (racy) entries in', branch)
               return cb(null)
             }
