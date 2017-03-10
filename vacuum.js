@@ -80,7 +80,7 @@ function vacuum (leaf, options, cb) {
       }
 
       if (branch === process.env.HOME) {
-        log("quitting because can't remove home directory", branch)
+        log('quitting because cannot remove home directory', branch)
         return cb(null)
       }
 
