@@ -22,11 +22,11 @@
   },
   "homepage": "https://github.com/npm/fs-vacuum",
   "devDependencies": {
-    "mkdirp": "^0.5.1",
-    "standard": "^6.0.8",
     "errno": "~0.1.0",
-    "require-inject": "~1.3.0",
-    "tap": "^5.7.1",
+    "mkdirp": "^0.5.1",
+    "require-inject": "^1.4.4",
+    "standard": "^6.0.8",
+    "tap": "^12.4.0",
     "tmp": "0.0.28"
   },
   "dependencies": {
